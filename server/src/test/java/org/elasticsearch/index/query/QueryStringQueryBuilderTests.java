@@ -93,6 +93,18 @@ public class QueryStringQueryBuilderTests extends AbstractQueryTestCase<QueryStr
             .field("type", "text")
             .startObject("index_prefixes").endObject()
             .endObject()
+            .startObject("additionalMappedField1")
+            .field("type", "text")
+            .endObject()
+            .startObject("additionalMappedField2")
+            .field("type", "text")
+            .endObject()
+            .startObject("additionalMappedField3")
+            .field("type", "text")
+            .endObject()
+            .startObject("additionalMappedField4")
+            .field("type", "text")
+            .endObject()
             .endObject().endObject().endObject();
 
         mapperService.merge("_doc",
@@ -1314,13 +1326,6 @@ public class QueryStringQueryBuilderTests extends AbstractQueryTestCase<QueryStr
 
     public void testToQueryMaxClauseWithWeight() throws IOException {
         QueryShardContext shardContext = createShardContext();
-        shardContext.getMapperService()
-            .merge("_doc", new CompressedXContent(Strings.toString(PutMappingRequest.buildFromSimplifiedDef("_doc",
-                "additionalMappedField1", "type=text",
-                "additionalMappedField2", "type=text",
-                "additionalMappedField3", "type=text",
-                "additionalMappedField4", "type=text"
-            ))), MapperService.MergeReason.MAPPING_UPDATE);
 
         try {
             new QueryStringQueryBuilder("\"bar\"")
@@ -1336,13 +1341,6 @@ public class QueryStringQueryBuilderTests extends AbstractQueryTestCase<QueryStr
 
     public void testToQueryMaxClauseNoWeight() throws IOException {
         QueryShardContext shardContext = createShardContext();
-        shardContext.getMapperService()
-            .merge("_doc", new CompressedXContent(Strings.toString(PutMappingRequest.buildFromSimplifiedDef("_doc",
-                "additionalMappedField1", "type=text",
-                "additionalMappedField2", "type=text",
-                "additionalMappedField3", "type=text",
-                "additionalMappedField4", "type=text"
-            ))), MapperService.MergeReason.MAPPING_UPDATE);
 
         try {
             new QueryStringQueryBuilder("\"bar\"")
